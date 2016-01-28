@@ -1,10 +1,6 @@
 ---
 language: python
 python: '2.7'
-addons:
-  apt:
-    packages:
-    - ssh
 
 install:
 - pip install --upgrade pip
@@ -15,7 +11,6 @@ env:
   global:
     - SSH_KEY_TYPE=rsa
     - secure: QBrOQ/8EviDnFLO/sQg4pJYXf2iQs3RLq3y2Cl33qdpbHwi39fUpj9iwp5zDkn+DP6c14pSvL+JkTOKn5iezbNYQUsqgUxAlvmW/ndBAk+cE/lpNMdiB5YTCkuIZyjc1k99aM5rUzXzmxfqH+x5vmsX5leMT8/N+1cWkL78OHe0phl/3YZFgnrn6Idqku4D+VpKCvvtnQQDsbWTRvnl9KEP9Xh/FDAPRlCKFAapSC9ozSkLouCG5rxX3Hd9jTv+6q9GjjjCTqc+6fJzAVylWTv1rftOBlLOZyOcdxZ4FvH/CVgL2rqG4j1tFiK3bSxKA684DOv64fwlICB86vevDPKf4ZMBkmkJVYwLcCCsCMiMMk0gWVFLgP5RyUYsVh1vhE5VGTCM2iJ2exKtvSEMMjcORxRFNffbs8gbDBcMQE/+U1Fb7tbvIkB374q0D8SXYXLmrPtbXQfh7he9w+iQ3YNI8dG3NzvMyJS2YvZfgfahmd8EKubkhMPB0vbpErt3TQjnDfMlbuei9Up83S3g8tis/aRHkhGaGKW8AhO101VYUuXbV1CRbbEHjikbHlKzUqi84Ev9f5lSIFky0sFmHq+tp5ljYuA2S1KnH6hDN5Ygk97F6fpCKYqPKg4BipFDYsHl+fMWKaIK/iRdgni4I8e99ALC6gfCju3hg6WhCbus=
-
 
 - ansible-playbook --syntax-check -i test/inventory test/playbook.yml
 - ansible-playbook -i test/inventory test/playbook.yml --connection=local --sudo -vvvv
