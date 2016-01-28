@@ -1,0 +1,38 @@
+---
+
+
+github_deploy_ssh_keygen_executable: 'ssh-keygen'
+github_deploy_ssh_keygen_type: 'ed25519'
+
+github_deploy_ssh_filename: "github_{{ github_deploy_ssh_keygen_type }}"
+
+github_deploy_ssh_dir: '~/.ssh'
+
+github_deploy_ssh_gen_path: "{{ github_deploy_ssh_temp_dir }}/{{ github_deploy_ssh_filename }}"
+
+github_deploy_ssh_keygen_comment: "Github deploy key generated on {{ ansible_date_time.iso8601 }}"
+
+github_deploy_ssh_keygen_options:
+  - key: '-N'
+    value: "''"
+  - key: '-t'
+    value: "{{ github_deploy_ssh_keygen_type }}"
+  - key: '-f'
+    value: "{{ github_deploy_ssh_gen_path }}"
+  - key: '-C'
+    value: "'{{ github_deploy_ssh_keygen_comment }}'"
+
+github_deploy_ssh_keygen_option: "{% for option in github_deploy_ssh_keygen_options %} {{ option.key }} {{ option.value | default('') }}{% endfor %}"
+
+github_deploy_ssh_keygen_command: "{{ github_deploy_ssh_keygen_executable }} {{ github_deploy_ssh_keygen_option }}"
+
+github_deploy_api_base: 'https://api.github.com'
+github_api_deploy_key_endpoint: "/repos/{{ github_deploy_api_owner | mandatory }}/{{ github_deploy_api_repo | mandatory }}/keys"
+github_api_deploy_key_add_url: "{{ github_deploy_api_base }}{{ github_api_deploy_key_endpoint }}"
+github_api_deploy_key_delete_url: "{{ github_deploy_api_base }}{{ github_api_deploy_key_endpoint }}/{{ github_api_deploy_key_id | mandatory}}"
+github_deploy_read_only: yes
+
+github_deploy_public_key_title: "{{ github_deploy_ssh_keygen_comment }}"
+
+github_deploy_revoke_handler: 'Revoke Github deploy key'
+...
