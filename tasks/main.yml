@@ -14,18 +14,22 @@
 - name: Read the private key
   command: "cat {{ github_deploy_ssh_gen_path }}"
   register: github_deploy_ssh_private_key_cat
+  no_log: yes
 
 - name: Set a fact with the private key
   set_fact:
     github_deploy_ssh_private_key: "{{ github_deploy_ssh_private_key_cat.stdout }}"
+  no_log: yes
 
 - name: Read the public key
   command: "cat {{ github_deploy_ssh_gen_path }}.pub"
   register: github_deploy_ssh_public_key_cat
+  no_log: yes
 
 - name: Set a fact with the public key
   set_fact:
     github_deploy_ssh_public_key: "{{ github_deploy_ssh_public_key_cat.stdout }}"
+  no_log: yes
 
 - name: Update github with the deploy key
   uri:
@@ -40,6 +44,7 @@
       key: "{{ github_deploy_ssh_public_key }}"
       read_only: "{{ 'false' if not github_deploy_read_only else 'true' }}"
   register: github_api_deploy_key_add_response
+  no_log: yes
 
 - name: Delete the temporary directory
   file:

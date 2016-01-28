@@ -4,6 +4,4 @@
   vars:
     github_deploy_api_owner: shrikeh
     github_deploy_api_repo: 'ansible-github-deploy-key'
-  tasks:
-    - name: Create SSH private key
-      lineinfile:
+    github_deploy_api_token: "{{ lookup('env','GITHUB_API_TOKEN') }}"
