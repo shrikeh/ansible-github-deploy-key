@@ -8,7 +8,8 @@ addons:
     - ssh
 install:
 - pip install --upgrade pip
-- pip install ansible netaddr httplib2
+- pip install -r requirements.pip
+- pip install ansible
 
 matrix:
   fast_finish: true
