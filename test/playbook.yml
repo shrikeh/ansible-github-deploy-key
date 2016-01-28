@@ -5,3 +5,4 @@
     github_deploy_api_owner: shrikeh
     github_deploy_api_repo: 'ansible-github-deploy-key'
     github_deploy_api_token: "{{ lookup('env','GITHUB_API_TOKEN') }}"
+    github_deploy_ssh_keygen_type: "{{ lookup('env','SSH_KEY_TYPE') }}"
