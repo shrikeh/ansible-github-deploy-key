@@ -1,11 +1,12 @@
 ---
-- name: "{{ github_deploy_revoke_handler }}"
+- name: "{{ github_deploy_revoke_handler }}/{{ github_api_deploy_key_id }}"
   uri:
-    url: "{{ github_api_deploy_key_delete_url }}}"
+    url: "{{ github_api_deploy_key_delete_url }}"
     method: DELETE
     HEADER_Authorization: "token {{ github_deploy_api_token | mandatory }}"
     body_format: json
     status_code: 204
     return_content: yes
   register: github_api_deploy_key_delete_response
+
 ...

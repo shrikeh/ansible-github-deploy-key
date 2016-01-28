@@ -4,7 +4,6 @@
   vars:
     github_deploy_api_owner: shrikeh
     github_deploy_api_repo: 'ansible-github-deploy-key'
-    github_deploy_api_token: 'fa65763ed9606c8c9eac535d59ecef361c6ae99a'
   tasks:
-    - name: Cleanup
-      meta: flush_handlers
+    - name: Create SSH private key
+      lineinfile:
