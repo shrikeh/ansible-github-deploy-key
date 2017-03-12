@@ -68,7 +68,7 @@ There are two handlers available to use to clean up afterwards. One will delete 
 
 ## Requirements
 
-The token specified in `github_deploy_api_token` must have the [minimum permissions][github_permissions] to create (and optionally delete) a deploy key. These are:
+You will need to [generate a Github personal access token][tokens] if you do not already have one (although it is recommended you create one specifically for this, even you do). The token specified in `github_deploy_api_token` must have the [minimum permissions][github_permissions] to create (and optionally delete) a deploy key. These are:
   - `repo`
   - `admin:public_key`
 
@@ -88,5 +88,6 @@ Specify if you wish the role to run `ssh-keyscan` against Github. The scan is de
 
 
 [git]: https://docs.ansible.com/ansible/git_module.html "Ansible Git module documentation"
+[tokens]: https://github.com/settings/tokens "Personal access tokens on Github"
 [github_api]: https://developer.github.com/v3/ "Github API documentation"
 [github_permissions]: https://help.github.com/articles/repository-permission-levels-for-an-organization/ "Github permissions for an organisation"
