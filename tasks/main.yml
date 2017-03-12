@@ -71,9 +71,6 @@
   set_fact:
     github_api_deploy_key_id: "{{ github_api_deploy_key_add_response.json.id }}"
 
-- name: Gather the github remote host public key
-  command:      "ssh-keyscan -H github.com"
-  register:     github_deploy_keyscan
-  delegate_to:  "{{ github_deploy_local_delegate }}"
-  run_once:     yes
+- include: keyscan.yml
+  when:    github_deploy_keyscan_enable
 ...

@@ -1,0 +1,11 @@
+---
+- name:         Gather the github remote host public key
+  command:      "ssh-keyscan -H github.com"
+  register:     github_deploy_keyscan_output
+  delegate_to:  "{{ github_deploy_local_delegate }}"
+  run_once:     yes
+
+- name: Set a fact for later use in populating an ssh_known_hosts file
+  set_fact:
+    github_deploy_keyscan: "{{ github_deploy_keyscan_output.stdout }}"
+...
