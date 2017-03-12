@@ -1,0 +1,53 @@
+---
+- name: Create a temp dir as not all distros allow overwriting of an existing key
+  command: 'mktemp -d'
+  register: github_deploy_temp_dir_create
+  run_once: yes
+  delegate_to: "{{ github_deploy_local_delegate }}"
+
+- name: Set this as the path for the key for now
+  set_fact:
+    github_deploy_ssh_temp_dir: "{{ github_deploy_temp_dir_create.stdout }}"
+
+- name: Generate a new private key
+  command: "{{ github_deploy_ssh_keygen_command }}"
+  delegate_to: "{{ github_deploy_local_delegate }}"
+
+- name: Read the private key
+  command: "cat {{ github_deploy_ssh_gen_path }}"
+  register: github_deploy_ssh_private_key_cat
+  no_log: yes
+  delegate_to: "{{ github_deploy_local_delegate }}"
+
+- name: Set a fact with the private key
+  set_fact:
+    github_deploy_ssh_private_key: "{{ github_deploy_ssh_private_key_cat.stdout }}"
+  no_log: yes
+
+- name: Read the public key
+  command: "cat {{ github_deploy_ssh_gen_path }}.pub"
+  register: github_deploy_ssh_public_key_cat
+  no_log: yes
+  delegate_to: "{{ github_deploy_local_delegate }}"
+
+- name: Set a fact with the public key
+  set_fact:
+    github_deploy_ssh_public_key: "{{ github_deploy_ssh_public_key_cat.stdout }}"
+  no_log: yes
+
+- name: Capture the SSH key fingerprint (to compare against the one in Github)
+  command:      "{{ github_deploy_ssh_keygen_executable }} -E md5 -lf {{ github_deploy_ssh_gen_path }}"
+  register:     github_deploy_ssh_key_fingerprint
+  delegate_to:  "{{ github_deploy_local_delegate }}"
+
+- name: Display the signature for debugging purposes
+  debug:
+    msg: "{{ github_deploy_ssh_key_fingerprint.stdout }}"
+
+- name: Delete the temporary directory
+  file:
+    path: "{{ github_deploy_ssh_temp_dir }}"
+    state: absent
+  run_once: yes
+  delegate_to: "{{ github_deploy_local_delegate }}"
+...
