@@ -24,11 +24,11 @@
     github_deploy_ssh_private_key: "{{ github_deploy_ssh_private_key_cat.stdout }}"
   no_log: yes
 
-  - name: Read the public key
-    command: "cat {{ github_deploy_ssh_gen_path }}.pub"
-    register: github_deploy_ssh_public_key_cat
-    no_log: yes
-    delegate_to: "{{ github_deploy_local_delegate }}"
+- name: Read the public key
+  command: "cat {{ github_deploy_ssh_gen_path }}.pub"
+  register: github_deploy_ssh_public_key_cat
+  no_log: yes
+  delegate_to: "{{ github_deploy_local_delegate }}"
 
   - name: Set a fact with the public key
     set_fact:
