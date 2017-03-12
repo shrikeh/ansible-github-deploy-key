@@ -1,4 +1,4 @@
-# ansible-github-deploy-key
+# github-deploy-key
 
 Role to automatically change your deploy key, therefore ensuring a fresh key every time. For the security-minded, or those who just want to totally forget about the need to setup deploy keys. I got bored of managing them so made them go away.
 
@@ -69,8 +69,8 @@ There are two handlers available to use to clean up afterwards. One will delete 
 ## Requirements
 
 The token specified in `github_deploy_api_token` must have the [minimum permissions][github_permissions] to create (and optionally delete) a deploy key. These are:
-  - repo
-  - admin:public_key
+  - `repo`
+  - `admin:public_key`
 
 ## Variables
 
@@ -84,7 +84,7 @@ Specify where the `ssh-keygen` binary is. It defaults to simply `ssh-keygen`, as
 
 `github_deploy_keyscan_enable`
 
-Specify if you wish the role to run ssh-keyscan against Github. The scan is delegated locally and specified with `run_once` for efficiency. By default this is enabled, and allows you to then populate an ssh_known_hosts file with the contents of `github_deploy_keyscan`. Setting this to false will skip the keyscan.
+Specify if you wish the role to run `ssh-keyscan` against Github. The scan is delegated locally and specified with `run_once` for efficiency. By default this is enabled, and allows you to then populate an `ssh_known_hosts` file with the contents of `github_deploy_keyscan`. Setting this to false will skip the keyscan.
 
 
 [git]: https://docs.ansible.com/ansible/git_module.html "Ansible Git module documentation"
