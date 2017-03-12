@@ -21,12 +21,12 @@ This role takes care of that. It creates a key locally on the ansible client (wh
     - { role: my-code-deploy }    
 ...
 ```
-Note that this role specifically does *not* do the following things:
+Note that this role specifically does *not* do the following things by default:
 - populate the private key to a file
 - delete the key off the host machine (it doesn't know where you saved it to)
 - automatically clear the key from the Github API (it doesn't know when you've finished with it)
 
-The private key is available in the host fact variable `github_deploy_ssh_private_key`. An example of use in your own playbook is below:
+The private key is available as a string in the host fact variable `github_deploy_ssh_private_key`. An example of use in your own playbook is below:
 
 ```YAML
 - name: Create a temporary directory for the key
@@ -90,7 +90,7 @@ Specify where the `ssh-keygen` binary is. It defaults to simply `ssh-keygen`, as
 
 `github_deploy_keyscan_enable`
 
-Specify if you wish the role to run ssh-keyscan against Github. The scan is delegated locally and specified with `run_once` for efficiency. By default this is enabled, and allows you to then populate an ssh_known_hosts file with the contents of `github_deploy_keyscan`. Setting this to false will skip the keyscan. 
+Specify if you wish the role to run ssh-keyscan against Github. The scan is delegated locally and specified with `run_once` for efficiency. By default this is enabled, and allows you to then populate an ssh_known_hosts file with the contents of `github_deploy_keyscan`. Setting this to false will skip the keyscan.
 
 
 [git]: https://docs.ansible.com/ansible/git_module.html "Ansible Git module documentation"

@@ -1,9 +1,16 @@
 ---
 # Used for delegate_to operations
-github_deploy_local_delegate: 127.0.0.1
+github_deploy_local_delegate: '127.0.0.1'
 
 # Whether or not to enable remote key scanning of Github
 github_deploy_keyscan_enable: yes
+
+# Whether or not to create the private key in a temporary directory
+github_deploy_create_host_key: no
+
+github_deploy_key_name: 'id_deploy'
+github_deploy_key_mode: '0600'
+
 
 # Assumes it is in your path, but you can change it
 github_deploy_ssh_keygen_executable: 'ssh-keygen'

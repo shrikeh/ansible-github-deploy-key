@@ -23,4 +23,7 @@
 
 - include: keyscan.yml
   when:    github_deploy_keyscan_enable
+
+- include: create-host-key.yml
+  when:     github_deploy_create_host_key
 ...
