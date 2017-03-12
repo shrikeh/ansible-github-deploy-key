@@ -24,7 +24,7 @@ This role takes care of that. It creates a key locally on the ansible client (wh
 Note that this role specifically does *not* do the following things by default:
 - populate the private key to a file
 - delete the key off the host machine (it doesn't know where you saved it to)
-- automatically clear the key from the Github API (it doesn't know when you've finished with it)
+- automatically clear the key from the Github API (it doesn't know when you've finished with it).
 
 The private key is available as a string in the host fact variable `github_deploy_ssh_private_key`. An example of use in your own playbook is below:
 
@@ -46,6 +46,8 @@ The private key is available as a string in the host fact variable `github_deplo
     mode: 0600
 ```
 
+However, this is also available as a preset task, controlled by setting `github_deploy_create_host_key` to truthy. It will then create the private key and populate the variable `github_deploy_ssh_private_key_path` with the path to the file.
+
 You can then later use Ansible's [git] module to deploy your code and then revoke the key afterwards:
 
 ```YAML
@@ -55,22 +57,14 @@ You can then later use Ansible's [git] module to deploy your code and then revok
     repo: 'git@github.com:shrikeh/ansible-github-deploy-key.git'
     dest: /path/to/deploy/dir
     key_file: "{{ deploy_code_key_dir }}/key"
+  changed_when: true  # Needed to trigger the notify
   notify:
     - Revoke Github deploy key
+    - Delete the transient deploy key host temp dir
 ...
 ```
 
-It is recommended you create your own handler to wipe the private key on the host afterwards:
-```YAML
----
-# handlers/main.yml
-
-- name: Delete the deploy key temporary directory
-  file:
-    path: "{{ deploy_code_key_dir }}"
-    state: absent
-...
-```
+There are two handlers available to use to clean up afterwards. One will delete the key from the Github API. The other will delete the temporary key from the host. Note that you should use `changed_when: true` to force them to clean up, as your code deployment may not change anything.
 
 ## Requirements
 

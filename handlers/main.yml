@@ -1,4 +1,5 @@
 ---
+# Removes the generated key from Github
 - name: Revoke Github deploy key
   uri:
     url: "{{ github_api_deploy_key_delete_url }}/{{ github_api_deploy_key_id }}"
@@ -11,4 +12,9 @@
   run_once: yes
   delegate_to: "{{ github_deploy_local_delegate }}"
 
+# Deletes the transient private key from the host
+- name: Delete the transient deploy key host temp dir
+  file:
+    path: "{{ github_deploy_key_temp_dir }}"
+    state: absent
 ...

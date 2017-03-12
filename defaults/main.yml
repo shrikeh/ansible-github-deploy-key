@@ -1,19 +1,30 @@
 ---
-# Used for delegate_to operations
-github_deploy_local_delegate: '127.0.0.1'
+###### Flow control variables
+# These change what the role will actually do
 
 # Whether or not to enable remote key scanning of Github
 github_deploy_keyscan_enable: yes
 
+# Whether or not to populate the host with the results of the key scan
+github_deploy_keyscan_populate_host: no
+
 # Whether or not to create the private key in a temporary directory
 github_deploy_create_host_key: no
 
+
+
+# Used for delegate_to operations
+github_deploy_local_delegate: '127.0.0.1'
+
+
+
 github_deploy_key_name: 'id_deploy'
 github_deploy_key_mode: '0600'
-
+github_deploy_known_hosts: '/etc/ssh/ssh_known_hosts'
 
 # Assumes it is in your path, but you can change it
 github_deploy_ssh_keygen_executable: 'ssh-keygen'
+github_deploy_ssh_keyscan_executable: 'ssh-keyscan'
 
 # Use up to date keys over RSA where possible
 github_deploy_ssh_keygen_type: 'ed25519'

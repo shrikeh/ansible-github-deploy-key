@@ -11,11 +11,11 @@
   lineinfile:
     create: yes
     state: present
-    line: "{{ github_deploy_ssh_private_key }}"
-    dest: "{{ github_deploy_key_temp_dir }}/{{ github_deploy_key_name }}"
-    mode: "{{ github_deploy_key_mode }}"
-    owner: "{{ github_deploy_key_owner | default(omit) }}"
-    group: "{{ github_deploy_key_group | default(omit) }}"
+    line:   "{{ github_deploy_ssh_private_key }}"
+    dest:   "{{ github_deploy_key_temp_dir }}/{{ github_deploy_key_name }}"
+    mode:   "{{ github_deploy_key_mode }}"
+    owner:  "{{ github_deploy_key_owner | default(omit) }}"
+    group:  "{{ github_deploy_key_group | default(omit) }}"
 
 - name: Set a fact for the key path for use later
   set_fact:
