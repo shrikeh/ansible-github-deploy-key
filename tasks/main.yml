@@ -1,5 +1,4 @@
 ---
-
 - name: Create a temp dir as not all distros allow overwriting of an existing key
   command: 'mktemp -d'
   register: github_deploy_temp_dir_create
