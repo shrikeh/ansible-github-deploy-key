@@ -45,6 +45,10 @@
   register: github_api_deploy_key_add_response
   no_log: yes
 
+- name: Set a fact for the Key ID
+  set_fact:
+    github_api_deploy_key_id: "{{ github_api_deploy_key_add_response.json.id }}"
+
 - name: Delete the temporary directory
   file:
     path: "{{ github_deploy_ssh_temp_dir }}"
@@ -52,7 +56,4 @@
   notify:
     - "{{ github_deploy_revoke_handler }}/{{ github_api_deploy_key_id }}"
 
-- name: Set a fact for the Key ID
-  set_fact:
-    github_api_deploy_key_id: "{{ github_api_deploy_key_add_response.json.id }}"
 ...
