@@ -11,7 +11,7 @@ _Yawn._
 This role takes care of that. It creates a key locally on the ansible client (which it promptly deletes), and updates the Github API with the public key. The key in use is therefore only in existence for the life of the playbook run, and useless thereafter. An optional handler also wipes it from Github when the deploy is over.
 
 ## Example usage
-```
+```YAML
 ---
 - hosts: all
   vars:
@@ -46,7 +46,7 @@ The private key is available as a string in the host fact variable `github_deplo
     mode: 0600
 ```
 
-However, this is also available as a preset task, controlled by setting `github_deploy_create_host_key` to truthy. It will then create the private key and populate the variable `github_deploy_ssh_private_key_path` with the path to the file.
+However, this is also available as a preset task, controlled by setting `github_deploy_create_host_key` to truthy. It will then create the private key in a temporary directory and populate the variable `github_deploy_ssh_private_key_path` with the path to the file.
 
 You can then later use Ansible's [git] module to deploy your code and then revoke the key afterwards:
 
