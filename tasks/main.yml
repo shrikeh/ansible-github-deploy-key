@@ -50,7 +50,7 @@
     path: "{{ github_deploy_ssh_temp_dir }}"
     state: absent
   notify:
-    - "{{ github_deploy_revoke_handler }}"
+    - "{{ github_deploy_revoke_handler }}/{{ github_api_deploy_key_id }}"
 
 - name: Set a fact for the Key ID
   set_fact:
