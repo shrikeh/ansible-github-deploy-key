@@ -1,7 +1,11 @@
 ---
+# Used for delegate_to operations
 github_deploy_local_delegate: 127.0.0.1
 
+# Assumes it is in your path, but you can change it
 github_deploy_ssh_keygen_executable: 'ssh-keygen'
+
+# Use up to date keys over RSA where possible
 github_deploy_ssh_keygen_type: 'ed25519'
 
 github_deploy_ssh_filename: "github_{{ github_deploy_ssh_keygen_type }}"

@@ -24,8 +24,19 @@
     github_deploy_ssh_private_key: "{{ github_deploy_ssh_private_key_cat.stdout }}"
   no_log: yes
 
+  - name: Read the public key
+    command: "cat {{ github_deploy_ssh_gen_path }}.pub"
+    register: github_deploy_ssh_public_key_cat
+    no_log: yes
+    delegate_to: "{{ github_deploy_local_delegate }}"
+
+  - name: Set a fact with the public key
+    set_fact:
+      github_deploy_ssh_public_key: "{{ github_deploy_ssh_public_key_cat.stdout }}"
+    no_log: yes
+
 - name: Capture the SSH key fingerprint (to compare against the one in Github)
-  command:      "ssh-keygen -E md5 -lf {{ github_deploy_ssh_gen_path }}"
+  command:      "{{ github_deploy_ssh_keygen_executable }} -E md5 -lf {{ github_deploy_ssh_gen_path }}"
   register:     github_deploy_ssh_key_fingerprint
   delegate_to:  "{{ github_deploy_local_delegate }}"
 
@@ -33,16 +44,12 @@
   debug:
     msg: "{{ github_deploy_ssh_key_fingerprint.stdout }}"
 
-- name: Read the public key
-  command: "cat {{ github_deploy_ssh_gen_path }}.pub"
-  register: github_deploy_ssh_public_key_cat
-  no_log: yes
+- name: Delete the temporary directory
+  file:
+    path: "{{ github_deploy_ssh_temp_dir }}"
+    state: absent
+  run_once: yes
   delegate_to: "{{ github_deploy_local_delegate }}"
-
-- name: Set a fact with the public key
-  set_fact:
-    github_deploy_ssh_public_key: "{{ github_deploy_ssh_public_key_cat.stdout }}"
-  no_log: yes
 
 - name: Update github with the deploy key
   uri:
@@ -69,11 +76,4 @@
   register:     github_deploy_keyscan
   delegate_to:  "{{ github_deploy_local_delegate }}"
   run_once:     yes
-
-- name: Delete the temporary directory
-  file:
-    path: "{{ github_deploy_ssh_temp_dir }}"
-    state: absent
-  run_once: yes
-  delegate_to: "{{ github_deploy_local_delegate }}"
 ...
