@@ -35,15 +35,15 @@
     github_deploy_ssh_public_key: "{{ github_deploy_ssh_public_key_cat.stdout }}"
   no_log: yes
 
-- name: Capture the SSH key fingerprint (to compare against the one in Github)
-  command:      "{{ github_deploy_ssh_keygen_executable }} -E md5 -lf {{ github_deploy_ssh_gen_path }}"
-  register:     github_deploy_ssh_key_fingerprint
-  delegate_to:  "{{ github_deploy_local_delegate }}"
-
-- name: Display the signature for debugging purposes
-  debug:
-    msg: "{{ github_deploy_ssh_key_fingerprint.stdout }}"
-
+# - name: Capture the SSH key fingerprint (to compare against the one in Github)
+#   command:      "{{ github_deploy_ssh_keygen_executable }} -E md5 -lf {{ github_deploy_ssh_gen_path }}"
+#   register:     github_deploy_ssh_key_fingerprint
+#   delegate_to:  "{{ github_deploy_local_delegate }}"
+#
+# - name: Display the signature for debugging purposes
+#   debug:
+#     msg: "{{ github_deploy_ssh_key_fingerprint.stdout }}"
+#
 - name: Delete the temporary directory
   file:
     path: "{{ github_deploy_ssh_temp_dir }}"
