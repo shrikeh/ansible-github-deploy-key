@@ -1,23 +1,21 @@
 ---
 - name: Create a temporary directory for the key
-  command: 'mktemp -d'
+  tempfile:
+    state: directory
+    prefix: "{{ github_deploy_key_temp_dir | default(omit) }}"
   register: github_deploy_key_temp_dir_create
-
-- name: Set a fact for the directory path to the private key
-  set_fact:
-    github_deploy_key_temp_dir: "{{ github_deploy_key_temp_dir_create.stdout }}"
 
 - name: Create a temporary private key file
   lineinfile:
     create: yes
     state: present
     line:   "{{ github_deploy_ssh_private_key }}"
-    dest:   "{{ github_deploy_key_temp_dir }}/{{ github_deploy_key_name }}"
+    dest:   "{{ github_deploy_key_temp_dir_create.path }}/{{ github_deploy_key_name }}"
     mode:   "{{ github_deploy_key_mode }}"
     owner:  "{{ github_deploy_key_owner | default(omit) }}"
     group:  "{{ github_deploy_key_group | default(omit) }}"
 
 - name: Set a fact for the key path for use later
   set_fact:
-    github_deploy_ssh_private_key_path: "{{ github_deploy_key_temp_dir }}/{{ github_deploy_key_name }}"
+    github_deploy_ssh_private_key_path: "{{ github_deploy_key_temp_dir_create.path }}/{{ github_deploy_key_name }}"
 ...
