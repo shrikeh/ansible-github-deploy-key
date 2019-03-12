@@ -4,7 +4,8 @@
 - name: Update github with the deploy key
   uri:
     url: "{{ github_api_deploy_key_add_url }}"
-    HEADER_Authorization: "token {{ github_deploy_api_token | mandatory }}"
+    headers:
+      Authorization: "token {{ github_deploy_api_token | mandatory }}"
     method:         POST
     body_format:    json
     status_code:    201
